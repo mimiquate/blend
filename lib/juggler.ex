@@ -46,7 +46,7 @@ defmodule Juggler do
     juggles() |> Map.fetch!(juggle_id)
   end
 
-  defmodule TempApp do
+  defmodule Juggler.TmpProject do
     def project do
       Process.get(:project)
     end
@@ -73,7 +73,7 @@ defmodule Juggler do
       )
     )
 
-    :ok = Mix.Project.push(TempApp)
+    :ok = Mix.Project.push(Juggler.TmpProject)
 
     fun.()
   after
