@@ -15,6 +15,7 @@ defmodule Juggler do
     case File.read(@juggles_file_path) do
       {:ok, _} ->
         Logger.info("#{@juggles_file_path} file already exists, doing nothing")
+
       {:error, :enoent} ->
         File.write(@juggles_file_path, @juggles_template)
         Logger.info("Successfully created #{@juggles_file_path} file")
@@ -27,9 +28,11 @@ defmodule Juggler do
         case Code.eval_string(contents) do
           {%{} = map, _} ->
             map
+
           _ ->
             raise "Couldn't find a map defining your juggles in #{@juggles_file_path} file"
         end
+
       {:error, :enoent} ->
         raise "Couldn't find a #{@juggles_file_path} file"
     end
@@ -53,7 +56,7 @@ defmodule Juggler do
     Process.put(
       :project,
       Mix.Project.config()
-      |> Keyword.merge([
+      |> Keyword.merge(
         app: name,
         deps:
           deps
@@ -67,7 +70,7 @@ defmodule Juggler do
         lockfile: "#{@juggler_dir}/#{name}.mix.lock",
         build_path: "#{@juggler_dir}/_build/#{name}",
         deps_path: "#{@juggler_dir}/deps/#{name}"
-      ])
+      )
     )
 
     :ok = Mix.Project.push(TempApp)
