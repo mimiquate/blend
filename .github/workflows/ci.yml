@@ -1,0 +1,33 @@
+name: CI
+on:
+  pull_request:
+  push:
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - elixir_version: 1.16.1
+            otp_version: '26.2.1'
+            lint: true
+          - elixir_version: 1.15.7
+            otp_version: '25.3.2.8'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: ${{matrix.otp_version}}
+          elixir-version: ${{matrix.elixir_version}}
+      - run: mix deps.get --check-locked
+      - run: mix format --check-formatted
+        if: ${{ matrix.lint }}
+      - run: mix deps.unlock --check-unused
+        if: ${{ matrix.lint }}
+      - run: mix deps.compile
+      - run: mix compile --warnings-as-errors
+        if: ${{ matrix.lint }}
+      # TODO
+      # - run: mix test
