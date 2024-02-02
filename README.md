@@ -1,6 +1,7 @@
 # Juggler
 
-**TODO: Add description**
+Generates and maintains multiple lockfiles so that you can test your elixir app
+against different variations of your dependencies
 
 ## Installation
 
