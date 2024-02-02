@@ -46,34 +46,28 @@ defmodule Juggler do
     juggles() |> Map.fetch!(juggle_id)
   end
 
-  defmodule Juggler.TmpProject do
-    def project do
-      Process.get(:project)
-    end
-  end
-
   defp with_project(name, deps, fun) do
-    Process.put(
-      :project,
-      Mix.Project.config()
-      |> Keyword.merge(
-        app: name,
-        deps:
-          deps
-          |> Enum.reduce(
-            Mix.Project.config()[:deps],
-            fn dep, acc ->
-              acc
-              |> List.keystore(elem(dep, 0), 0, dep)
-            end
-          ),
-        lockfile: "#{@juggler_dir}/#{name}.mix.lock",
-        build_path: "#{@juggler_dir}/_build/#{name}",
-        deps_path: "#{@juggler_dir}/deps/#{name}"
+    :ok =
+      Mix.ProjectStack.push(
+        Juggler.TmpProject,
+        Mix.Project.config()
+        |> Keyword.merge(
+          app: name,
+          deps:
+            deps
+            |> Enum.reduce(
+              Mix.Project.config()[:deps],
+              fn dep, acc ->
+                acc
+                |> List.keystore(elem(dep, 0), 0, dep)
+              end
+            ),
+          lockfile: "#{@juggler_dir}/#{name}.mix.lock",
+          build_path: "#{@juggler_dir}/_build/#{name}",
+          deps_path: "#{@juggler_dir}/deps/#{name}"
+        ),
+        "nofile"
       )
-    )
-
-    :ok = Mix.Project.push(Juggler.TmpProject)
 
     fun.()
   after
