@@ -33,6 +33,7 @@ defmodule JugglerTest do
           }
           """
         )
+
         Mix.Task.run("juggler.get")
         File.exists?("juggler/jason-1-0.mix.lock")
       end
