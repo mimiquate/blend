@@ -10,7 +10,7 @@ defmodule JugglerTest do
     :ok
   end
 
-  test "greets the world" do
+  test "init/0 generates juggles file" do
     File.cd!(
       @tmp_path,
       fn ->
