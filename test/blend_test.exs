@@ -1,6 +1,6 @@
-defmodule JugglerTest do
+defmodule BlendTest do
   use ExUnit.Case
-  doctest Juggler
+  doctest Blend
 
   @tmp_path Path.expand("../tmp", __DIR__)
 
@@ -10,23 +10,23 @@ defmodule JugglerTest do
     :ok
   end
 
-  test "init/0 generates juggles file" do
+  test "init/0 generates blend file" do
     File.cd!(
       @tmp_path,
       fn ->
-        refute File.exists?("juggles.exs")
-        assert Juggler.init() == :ok
-        assert File.exists?("juggles.exs")
+        refute File.exists?("blend.exs")
+        Mix.Task.run("blend.init")
+        assert File.exists?("blend.exs")
       end
     )
   end
 
-  test "juggler.get task" do
+  test "blend.get task" do
     File.cd!(
       @tmp_path,
       fn ->
         File.write(
-          "juggles.exs",
+          "blend.exs",
           """
           %{
             "jason-1-0": [{:jason, "~> 1.0"}]
@@ -34,8 +34,8 @@ defmodule JugglerTest do
           """
         )
 
-        Mix.Task.run("juggler.get")
-        File.exists?("juggler/jason-1-0.mix.lock")
+        Mix.Task.run("blend.get")
+        File.exists?("blend/jason-1-0.mix.lock")
       end
     )
 
