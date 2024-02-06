@@ -54,7 +54,6 @@ defmodule Blend do
         Blend.TmpProject,
         Mix.Project.config()
         |> Keyword.merge(
-          app: blend_id,
           deps:
             deps
             |> Enum.reduce(
