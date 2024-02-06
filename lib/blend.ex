@@ -1,6 +1,4 @@
 defmodule Blend do
-  require Logger
-
   @moduledoc """
   Documentation for `Blend`.
   """
@@ -18,11 +16,11 @@ defmodule Blend do
   def init do
     case File.read(@blendfile_path) do
       {:ok, _} ->
-        Logger.info("#{@blendfile_path} file already exists, doing nothing")
+        IO.puts("#{@blendfile_path} file already exists, doing nothing")
 
       {:error, :enoent} ->
-        File.write(@blendfile_path, @blendfile_template)
-        Logger.info("Successfully created #{@blendfile_path} file")
+        File.write!(@blendfile_path, @blendfile_template)
+        IO.puts("Successfully created #{@blendfile_path} file")
     end
   end
 
