@@ -71,6 +71,6 @@ defmodule Juggler do
 
     fun.()
   after
-    Mix.Project.pop()
+    Mix.ProjectStack.pop()
   end
 end
