@@ -1,5 +1,9 @@
 # Blend
 
+[![ci](https://github.com/mimiquate/blend/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/mimiquate/blend/actions?query=branch%3Amain)
+[![Hex.pm](https://img.shields.io/hexpm/v/blend.svg)](https://hex.pm/packages/blend)
+[![Docs](https://img.shields.io/badge/docs-gray.svg)](https://hexdocs.pm/blend)
+
 Generates and maintains multiple lockfiles so that you can test your elixir app
 against different variations of your dependencies
 
