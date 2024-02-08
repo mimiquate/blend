@@ -8,7 +8,7 @@ defmodule Blend.MixProject do
     [
       app: :blend,
       description: @description,
-      version: "0.1.1",
+      version: "0.1.2",
       elixir: "~> 1.15",
       start_permanent: Mix.env() == :prod,
       deps: deps(),

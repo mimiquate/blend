@@ -7,10 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.1] - 2024-02-06
 
+### Fixed
+
+- `mix blend.get` on first run (when `_build` folder is empty) now works
+
+## [0.1.1] - 2024-02-06
+
 ### Added
 
 - `mix blend.update`
-
 
 ## [0.1.0] - 2024-02-06
 
