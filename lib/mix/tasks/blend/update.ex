@@ -2,6 +2,7 @@ defmodule Mix.Tasks.Blend.Update do
   use Mix.Task
 
   @shortdoc "Updates lockfiles from blend.exs"
+  @requirements ["app.config"]
 
   @impl true
   def run(args) do

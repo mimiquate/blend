@@ -2,6 +2,7 @@ defmodule Mix.Tasks.Blend.Get do
   use Mix.Task
 
   @shortdoc "Generates lockfiles from blend.exs"
+  @requirements ["app.config"]
 
   @impl true
   def run(args) do
