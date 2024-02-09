@@ -36,6 +36,8 @@ to generate lockfiles with variations of your dependencies.
 
 See your new extra lockfiles listed under `/blend` folder.
 
+Edit and set custom `lockfile`, `deps_path`, and `build_path` options in your `mix.exs` project,
+
 Also you probably want to ignore `/blend/_build` and `/blend/deps` in your `.gitignore`.
 
 ## License
