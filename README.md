@@ -20,9 +20,23 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/blend>.
+## Usage
+
+```
+$ mix blend.init
+```
+
+Edit and set your blends in auto-generated `blend.exs` file.
+
+```
+$ mix blend.get
+```
+
+to generate lockfiles with variations of your dependencies.
+
+See your new extra lockfiles listed under `/blend` folder.
+
+Also you probably want to ignore `/blend/_build` and `/blend/deps` in your `.gitignore`.
 
 ## License
 
