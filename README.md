@@ -22,45 +22,47 @@ end
 
 ## Usage
 
-1.
+### 1. Initialization
 
 ```
 $ mix blend.init
 ```
 
+### 2. Define your blends
+
 Edit and set your blends in the auto-generated `blend.exs` file.
 
-2.
 
-Add
-
-```
-/blend/_build
-/blend/deps
-```
-
-to your `.gitignore`.
-
-3.
+### 3. Resolve blends and generate lockfiles
 
 ```
 $ mix blend.get
 ```
 
-to resolve your blends and generate new lockfiles with variations of your dependencies under the `/blend` folder.
+to resolve your blends and generate new lockfiles with variations of your dependencies under the new `/blend` folder.
+
+### 4. Ignore blend build artifacts
+
+Add
 
 ```
-$ mix blend.update --all
+# .gitignore
+
+/blend/_build
+/blend/deps
 ```
 
-whenever you want to update all your blend lockfiles to latest possible versions.
+to your `.gitignore` file.
+
+before comitting your changes.
 
 
-#### Running task in the context of a lockfile
+### 5. Running in the context of a blend lockfile
 
-1. Overriding your `mix.lock`.
+#### Option A. Overriding your `mix.lock`.
 
-Might be enough if you just want to test against different lockfiles in your CI, to
+If you just want to have your CI pick up a different lockfile under certain condition, it
+might be enough to just:
 
 ```
 mv blend/<blend-name>.mix.lock mix.lock
@@ -68,12 +70,12 @@ mv blend/<blend-name>.mix.lock mix.lock
 
 as a CI step before `mix deps.get`.
 
-1. `BLEND` env var configuration
+#### Option B. `BLEND` env var configuration
 
-More permanent configuration to be able to just run mix tasks in the context of a lockfile with a simple env var
+A more permanent configuration to be able to run mix tasks in the context of a lockfile with a simple env var
 can be acomplished by customizing a bit your `mix.exs`.
 
-Create a new file under `blend/premix.exs` with the following contents:
+##### 1. Create a new file under `blend/premix.exs` with the following contents:
 
 ```
 # blend/premix.exs
@@ -91,9 +93,9 @@ if blend && String.length(blend) > 0 do
 end
 ```
 
-Append `Code.compile_file("blend/premix.exs")` to the top of your `mix.exs` file.
+##### 2. Append `Code.compile_file("blend/premix.exs")` to the top of your `mix.exs` file.
 
-Also conditionally set the `lockfile` option in your `def project`.
+##### 3. Conditionally set the `lockfile` option in your `def project`.
 
 Something like this would be enough:
 
@@ -116,11 +118,21 @@ Something like this would be enough:
   end
 ```
 
+##### 4. Enjoy
+
 Now you can run any task, e.g. run your tests, against different lockfiles locally by just executing:
 
 ```
 BLEND=<blend-name> mix test
 ```
+
+### 6. Updating blend lockfiles
+
+```
+$ mix blend.update --all
+```
+
+whenever you want to update all your blend lockfiles to latest possible versions.
 
 ## License
 
