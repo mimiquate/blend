@@ -22,23 +22,105 @@ end
 
 ## Usage
 
+1.
+
 ```
 $ mix blend.init
 ```
 
-Edit and set your blends in auto-generated `blend.exs` file.
+Edit and set your blends in the auto-generated `blend.exs` file.
+
+2.
+
+Add
+
+```
+/blend/_build
+/blend/deps
+```
+
+to your `.gitignore`.
+
+3.
 
 ```
 $ mix blend.get
 ```
 
-to generate lockfiles with variations of your dependencies.
+to resolve your blends and generate new lockfiles with variations of your dependencies under the `/blend` folder.
 
-See your new extra lockfiles listed under `/blend` folder.
+```
+$ mix blend.update --all
+```
 
-Edit and set custom `lockfile`, `deps_path`, and `build_path` options in your `mix.exs` project,
+whenever you want to update all your blend lockfiles to latest possible versions.
 
-Also you probably want to ignore `/blend/_build` and `/blend/deps` in your `.gitignore`.
+
+#### Running task in the context of a lockfile
+
+1. Overriding your `mix.lock`.
+
+Might be enough if you just want to test against different lockfiles in your CI, to
+
+```
+mv blend/<blend-name>.mix.lock mix.lock
+```
+
+as a CI step before `mix deps.get`.
+
+1. `BLEND` env var configuration
+
+More permanent configuration to be able to just run mix tasks in the context of a lockfile with a simple env var
+can be acomplished by customizing a bit your `mix.exs`.
+
+Create a new file under `blend/premix.exs` with the following contents:
+
+```
+# blend/premix.exs
+
+maybe_put_env = fn varname, value ->
+  System.put_env(varname, System.get_env(varname, value))
+end
+
+blend = System.get_env("BLEND")
+
+if blend && String.length(blend) > 0 do
+  maybe_put_env.("MIX_LOCKFILE", "blend/#{blend}.mix.lock")
+  maybe_put_env.("MIX_DEPS_PATH", "blend/deps/#{blend}")
+  maybe_put_env.("MIX_BUILD_ROOT", "blend/_build/#{blend}")
+end
+```
+
+Append `Code.compile_file("blend/premix.exs")` to the top of your `mix.exs` file.
+
+Also conditionally set the `lockfile` option in your `def project`.
+
+Something like this would be enough:
+
+```diff
+# In mix.exs
+
+  def project do
+    [
+      ...
+    ]
+    |> Keyword.merge(maybe_lockfile_option())
+  end
+
+  defp maybe_lockfile_option do
+    case System.get_env("MIX_LOCKFILE") do
+      nil -> []
+      "" -> []
+      lockfile -> [lockfile: lockfile]
+    end
+  end
+```
+
+Now you can run any task, e.g. run your tests, against different lockfiles locally by just executing:
+
+```
+BLEND=<blend-name> mix test
+```
 
 ## License
 
