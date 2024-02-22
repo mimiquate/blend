@@ -7,7 +7,8 @@ defmodule Mix.Tasks.Blend.Update do
   @impl true
   def run(args) do
     Blend.blends()
-    |> Enum.map(fn {blend_id, _deps} ->
+    |> Map.keys()
+    |> Enum.map(fn blend_id ->
       IO.puts("Updating blend #{blend_id}")
 
       Blend.within(
