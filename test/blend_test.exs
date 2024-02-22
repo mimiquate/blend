@@ -29,10 +29,8 @@ defmodule BlendTest do
         )
 
         Mix.Task.run("blend.get")
-        File.exists?("blend/jason-1-0.mix.lock")
+        assert File.exists?("blend/jason-1-0.mix.lock")
       end
     )
-
-    assert true
   end
 end
