@@ -5,13 +5,7 @@ defmodule Blend do
 
   @blend_dir "blend"
   @blendfile_path "blend.exs"
-  @blendfile_template """
-  # Example for testing against 1.x and 2.x of some dependency
-  # %{
-  #   "dep-name-1-0": [{:dep_name, "~> 1.0"}],
-  #   "dep-name-2-0": [{:dep_name, "~> 2.0"}],
-  # }
-  """
+  @blendfile_template File.read!(Path.join(__DIR__, "blend/templates/blend.exs"))
 
   def init do
     case File.read(@blendfile_path) do
