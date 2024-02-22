@@ -2,17 +2,10 @@ defmodule BlendTest do
   use ExUnit.Case
   doctest Blend
 
-  @tmp_path Path.expand("../tmp", __DIR__)
-
-  setup do
-    File.mkdir_p!(@tmp_path)
-    on_exit(fn -> File.rm_rf(@tmp_path) end)
-    :ok
-  end
-
-  test "init/0 generates blend file" do
+  @tag :tmp_dir
+  test "init/0 generates blend file", %{tmp_dir: tmp_dir} do
     File.cd!(
-      @tmp_path,
+      tmp_dir,
       fn ->
         refute File.exists?("blend.exs")
         Mix.Task.run("blend.init")
@@ -21,9 +14,10 @@ defmodule BlendTest do
     )
   end
 
-  test "blend.get task" do
+  @tag :tmp_dir
+  test "blend.get task", %{tmp_dir: tmp_dir} do
     File.cd!(
-      @tmp_path,
+      tmp_dir,
       fn ->
         File.write(
           "blend.exs",
