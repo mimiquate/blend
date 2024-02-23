@@ -61,23 +61,22 @@ before comitting your changes.
 
 #### Option A. Overriding your `mix.lock`.
 
-If you just want to have your CI pick up a different lockfile under certain condition, it
-might be enough to just:
+If you just need a CI job step to run against a blend lockfile, it might be enough to just:
 
 ```
-mv blend/<blend-name>.mix.lock mix.lock
+$ mv blend/<blend-name>.mix.lock mix.lock
 ```
 
 as a CI step before `mix deps.get`.
 
 #### Option B. `BLEND` env var configuration
 
-A more permanent configuration to be able to run mix tasks in the context of a lockfile with a simple env var
-can be acomplished by customizing a bit your `mix.exs`.
+A more permanent configuration for running mix tasks in the context of a blend lockfile with a simple env var
+can be acomplished by customizing your `mix.exs` a bit, with the following steps.
 
-##### 1. Create a new file under `blend/premix.exs` with the following contents:
+##### 1. Create a new file `blend/premix.exs` with the following contents:
 
-```
+```elixir
 # blend/premix.exs
 
 maybe_put_env = fn varname, value ->
@@ -93,13 +92,13 @@ if blend && String.length(blend) > 0 do
 end
 ```
 
-##### 2. Append `Code.compile_file("blend/premix.exs")` to the top of your `mix.exs` file.
+##### 2. Add `Code.compile_file("blend/premix.exs")` statement to the top of your `mix.exs`.
 
-##### 3. Conditionally set the `lockfile` option in your `def project`.
+##### 3. Conditionally set the `lockfile` option in your `mix.exs`'s `def project`.
 
 Something like this would be enough:
 
-```diff
+```elixir
 # In mix.exs
 
   def project do
@@ -123,7 +122,7 @@ Something like this would be enough:
 Now you can run any task, e.g. run your tests, against different lockfiles locally by just executing:
 
 ```
-BLEND=<blend-name> mix test
+$ BLEND=<blend-name> mix test
 ```
 
 ### 6. Updating blend lockfiles
