@@ -94,6 +94,17 @@ end
 
 ##### 2. Add `Code.compile_file("blend/premix.exs")` statement to the top of your `mix.exs`.
 
+```elixir
+# mix.exs
+
+Code.compile_file("blend/premix.exs")
+
+defmodule YourApp.MixProject do
+  ...
+
+end
+```
+
 ##### 3. Conditionally set the `lockfile` option in your `mix.exs`'s `def project`.
 
 Something like this would be enough:
