@@ -110,7 +110,10 @@ end
 Something like this would be enough:
 
 ```elixir
-# In mix.exs
+# mix.exs
+
+defmodule YourApp.MixProject do
+  use Mix.Project
 
   def project do
     [
@@ -119,6 +122,8 @@ Something like this would be enough:
     |> Keyword.merge(maybe_lockfile_option())
   end
 
+  ...
+
   defp maybe_lockfile_option do
     case System.get_env("MIX_LOCKFILE") do
       nil -> []
@@ -126,6 +131,7 @@ Something like this would be enough:
       lockfile -> [lockfile: lockfile]
     end
   end
+end
 ```
 
 ##### 4. Enjoy
