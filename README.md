@@ -22,23 +22,116 @@ end
 
 ## Usage
 
+### 1. Initialization
+
 ```
 $ mix blend.init
 ```
 
-Edit and set your blends in auto-generated `blend.exs` file.
+### 2. Define your blends
+
+Edit and set your blends in the auto-generated `blend.exs` file.
+
+
+### 3. Resolve blends and generate lockfiles
 
 ```
 $ mix blend.get
 ```
 
-to generate lockfiles with variations of your dependencies.
+to resolve your blends and generate new lockfiles with variations of your dependencies under the new `/blend` folder.
 
-See your new extra lockfiles listed under `/blend` folder.
+### 4. Ignore blend build artifacts
 
-Edit and set custom `lockfile`, `deps_path`, and `build_path` options in your `mix.exs` project,
+Add
 
-Also you probably want to ignore `/blend/_build` and `/blend/deps` in your `.gitignore`.
+```
+# .gitignore
+
+/blend/_build
+/blend/deps
+```
+
+to your `.gitignore` file.
+
+before comitting your changes.
+
+
+### 5. Running in the context of a blend lockfile
+
+#### Option A. Overriding your `mix.lock`.
+
+If you just need a CI job step to run against a blend lockfile, it might be enough to just:
+
+```
+$ mv blend/<blend-name>.mix.lock mix.lock
+```
+
+as a CI step before `mix deps.get`.
+
+#### Option B. `BLEND` env var configuration
+
+A more permanent configuration for running mix tasks in the context of a blend lockfile with a simple env var
+can be acomplished by customizing your `mix.exs` a bit, with the following steps.
+
+##### 1. Create a new file `blend/premix.exs` with the following contents:
+
+```elixir
+# blend/premix.exs
+
+maybe_put_env = fn varname, value ->
+  System.put_env(varname, System.get_env(varname, value))
+end
+
+blend = System.get_env("BLEND")
+
+if blend && String.length(blend) > 0 do
+  maybe_put_env.("MIX_LOCKFILE", "blend/#{blend}.mix.lock")
+  maybe_put_env.("MIX_DEPS_PATH", "blend/deps/#{blend}")
+  maybe_put_env.("MIX_BUILD_ROOT", "blend/_build/#{blend}")
+end
+```
+
+##### 2. Add `Code.compile_file("blend/premix.exs")` statement to the top of your `mix.exs`.
+
+##### 3. Conditionally set the `lockfile` option in your `mix.exs`'s `def project`.
+
+Something like this would be enough:
+
+```elixir
+# In mix.exs
+
+  def project do
+    [
+      ...
+    ]
+    |> Keyword.merge(maybe_lockfile_option())
+  end
+
+  defp maybe_lockfile_option do
+    case System.get_env("MIX_LOCKFILE") do
+      nil -> []
+      "" -> []
+      lockfile -> [lockfile: lockfile]
+    end
+  end
+```
+
+##### 4. Enjoy
+
+Now you can run any task, e.g. run your tests, against different lockfiles locally by just executing:
+
+```
+$ BLEND=<blend-name> mix test
+```
+
+### 6. Updating blend lockfiles
+
+```
+$ mix blend.update --all
+```
+
+whenever you want to update all your blend lockfiles to latest possible versions.
 
 ## License
 
