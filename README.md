@@ -4,8 +4,10 @@
 [![Hex.pm](https://img.shields.io/hexpm/v/blend.svg)](https://hex.pm/packages/blend)
 [![Docs](https://img.shields.io/badge/docs-gray.svg)](https://hexdocs.pm/blend)
 
-Generates and maintains multiple lockfiles so that you can test your elixir app
-against different variations of your dependencies
+Test your package against different versions of its dependencies.
+
+Generates and maintains multiple lockfiles so that you can test your package
+against different variations of your dependencies versions.
 
 ## Installation
 

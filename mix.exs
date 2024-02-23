@@ -1,7 +1,7 @@
 defmodule Blend.MixProject do
   use Mix.Project
 
-  @description "Tasks for generating and maintaining multiple lockfiles"
+  @description "Test your package against different versions of its dependencies"
   @source_url "https://github.com/mimiquate/blend"
 
   def project do
