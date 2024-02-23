@@ -142,6 +142,12 @@ Now you can run any task, e.g. run your tests, against different lockfiles local
 $ BLEND=<blend-name> mix test
 ```
 
+If you need a quick printed list of the available blend names, you can:
+
+```
+$ mix blend.list
+```
+
 ### 6. Updating blend lockfiles
 
 ```
