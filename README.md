@@ -17,7 +17,7 @@ by adding `blend` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:blend, "~> 0.2.1"}
+    {:blend, "~> 0.2.1", only: :dev}
   ]
 end
 ```
