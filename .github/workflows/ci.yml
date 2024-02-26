@@ -17,6 +17,8 @@ jobs:
             otp_version: '25.3.2.8'
           - elixir_version: 1.14.5
             otp_version: '24.3.4.15'
+          - elixir_version: 1.13.4
+            otp_version: '24.3.4.15'
     steps:
       - uses: actions/checkout@v4
       - uses: erlef/setup-beam@v1
