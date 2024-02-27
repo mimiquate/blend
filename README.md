@@ -24,7 +24,7 @@ end
 
 ## Usage
 
-### 1. Generate a new `blend.exs`
+### 1. Generate `blend.exs`
 
 ```
 $ mix blend.init
