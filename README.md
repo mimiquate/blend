@@ -66,7 +66,7 @@ before comitting your changes.
 If you just need a CI job step to run against a blend lockfile, it might be enough to just:
 
 ```
-$ mv blend/<blend-name>.mix.lock mix.lock
+$ cp blend/<blend-name>.mix.lock mix.lock
 ```
 
 as a CI step before `mix deps.get`.
