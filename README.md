@@ -32,13 +32,13 @@ $ mix blend.init
 
 ### 2. Define your blends
 
-```
+```elixir
 # blend.exs
 
 # Example for testing against 1.x and 2.x of plug_crypto
 %{
-  plug_crypto_1_x: [{:plug_crypto, "~> 1.2"}],
-  plug_crypto_2_x: [{:plug_crypto, "~> 2.0"}]
+  plug_crypto_1: [{:plug_crypto, "~> 1.2"}],
+  plug_crypto_2: [{:plug_crypto, "~> 2.0"}]
 }
 ```
 
@@ -57,8 +57,8 @@ to resolve your blends and generate new lockfiles with variations of your depend
 blend
 ├── _build
 ├── deps
-├── plug_crypto_1_x.mix.lock
-└── plug_crypto_2_x.mix.lock
+├── plug_crypto_1.mix.lock
+└── plug_crypto_2.mix.lock
 
 ```
 
@@ -87,7 +87,7 @@ $ cp blend/<blend_name>.mix.lock mix.lock
 Now you can run any task, e.g. run your tests.
 
 ```
-mix test
+$ mix test
 ```
 
 #### Option B. `BLEND` env var configuration
