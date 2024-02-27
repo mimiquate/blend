@@ -24,13 +24,23 @@ end
 
 ## Usage
 
-### 1. Initialization
+### 1. Generate `blend.exs`
 
 ```
 $ mix blend.init
 ```
 
 ### 2. Define your blends
+
+```elixir
+# blend.exs
+
+# Example for testing against 1.x and 2.x of plug_crypto
+%{
+  plug_crypto_1: [{:plug_crypto, "~> 1.2"}],
+  plug_crypto_2: [{:plug_crypto, "~> 2.0"}]
+}
+```
 
 Edit and set your blends in the auto-generated `blend.exs` file.
 
@@ -43,9 +53,16 @@ $ mix blend.get
 
 to resolve your blends and generate new lockfiles with variations of your dependencies under the new `/blend` folder.
 
-### 4. Ignore blend build artifacts
+```
+blend
+├── _build
+├── deps
+├── plug_crypto_1.mix.lock
+└── plug_crypto_2.mix.lock
 
-Add
+```
+
+### 4. Ignore blend build artifacts
 
 ```
 # .gitignore
@@ -54,9 +71,7 @@ Add
 /blend/deps
 ```
 
-to your `.gitignore` file.
-
-before comitting your changes.
+Add to your `.gitignore` file, before comitting your changes.
 
 
 ### 5. Running in the context of a blend lockfile
@@ -66,10 +81,14 @@ before comitting your changes.
 If you just need a CI job step to run against a blend lockfile, it might be enough to just:
 
 ```
-$ cp blend/<blend-name>.mix.lock mix.lock
+$ cp blend/<blend_name>.mix.lock mix.lock
 ```
 
-as a CI step before `mix deps.get`.
+Now you can run any task, e.g. run your tests.
+
+```
+$ mix test
+```
 
 #### Option B. `BLEND` env var configuration
 
@@ -94,69 +113,49 @@ if blend && String.length(blend) > 0 do
 end
 ```
 
-##### 2. Add `Code.compile_file("blend/premix.exs")` statement to the top of your `mix.exs`.
+##### 2. Modify your `mix.exs`.
 
 ```elixir
 # mix.exs
 
-Code.compile_file("blend/premix.exs")
+Code.compile_file("blend/premix.exs")         # New
 
 defmodule YourApp.MixProject do
   ...
-
-end
-```
-
-##### 3. Conditionally set the `lockfile` option in your `mix.exs`'s `def project`.
-
-Something like this would be enough:
-
-```elixir
-# mix.exs
-
-defmodule YourApp.MixProject do
-  use Mix.Project
-
   def project do
     [
       ...
     ]
-    |> Keyword.merge(maybe_lockfile_option())
+    |> Keyword.merge(maybe_lockfile_option()) # New
   end
+  ....
 
-  ...
-
-  defp maybe_lockfile_option do
-    case System.get_env("MIX_LOCKFILE") do
-      nil -> []
-      "" -> []
-      lockfile -> [lockfile: lockfile]
-    end
-  end
-end
+  defp maybe_lockfile_option do               # New
+    case System.get_env("MIX_LOCKFILE") do    #
+      nil -> []                               #
+      "" -> []                                #
+      lockfile -> [lockfile: lockfile]        #
+    end                                       #
+  end                                         #
+end            
 ```
 
-##### 4. Enjoy
+##### 3. Enjoy
 
 Now you can run any task, e.g. run your tests, against different lockfiles locally by just executing:
 
 ```
-$ BLEND=<blend-name> mix test
+$ BLEND=<blend_name> mix test
 ```
 
-If you need a quick printed list of the available blend names, you can:
+## Commands
 
 ```
-$ mix blend.list
+$ mix blend.init         # Generate blend.exs
+$ mix blend.get          # Generate blend lockfiles
+$ mix blend.update --all # Update blend lockfiles to latest possible versions
+$ mix blend.list         # List blends
 ```
-
-### 6. Updating blend lockfiles
-
-```
-$ mix blend.update --all
-```
-
-whenever you want to update all your blend lockfiles to latest possible versions.
 
 ## License
 
