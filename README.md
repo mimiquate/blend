@@ -95,22 +95,10 @@ $ mix test
 A more permanent configuration for running mix tasks in the context of a blend lockfile with a simple env var
 can be acomplished by customizing your `mix.exs` a bit, with the following steps.
 
-##### 1. Create a new file `blend/premix.exs` with the following contents:
+##### 1. Create a new file `blend/premix.exs` with the following command:
 
-```elixir
-# blend/premix.exs
-
-maybe_put_env = fn varname, value ->
-  System.put_env(varname, System.get_env(varname, value))
-end
-
-blend = System.get_env("BLEND")
-
-if blend && String.length(blend) > 0 do
-  maybe_put_env.("MIX_LOCKFILE", "blend/#{blend}.mix.lock")
-  maybe_put_env.("MIX_DEPS_PATH", "blend/deps/#{blend}")
-  maybe_put_env.("MIX_BUILD_ROOT", "blend/_build/#{blend}")
-end
+```
+$ mix blend.premix
 ```
 
 ##### 2. Modify your `mix.exs`.

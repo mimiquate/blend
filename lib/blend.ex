@@ -6,6 +6,8 @@ defmodule Blend do
   @blend_dir "blend"
   @blendfile_path "blend.exs"
   @blendfile_template File.read!(Path.join(__DIR__, "blend/templates/blend.exs"))
+  @premix_file_path Path.join(@blend_dir, "premix.exs")
+  @premix_file_template File.read!(Path.join(__DIR__, "blend/templates/premix.exs"))
 
   def init do
     case File.read(@blendfile_path) do
@@ -16,6 +18,11 @@ defmodule Blend do
         File.write!(@blendfile_path, @blendfile_template)
         IO.puts("Successfully created #{@blendfile_path} file")
     end
+  end
+
+  def premix do
+    File.write!(@premix_file_path, @premix_file_template)
+    IO.puts("Written #{@premix_file_path} file")
   end
 
   def within(blend_id, fun) do
