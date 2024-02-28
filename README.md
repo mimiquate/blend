@@ -143,6 +143,7 @@ $ mix blend.init         # Generate blend.exs
 $ mix blend.get          # Generate blend lockfiles
 $ mix blend.update --all # Update blend lockfiles to latest possible versions
 $ mix blend.list         # List blends
+$ mix blend.premix       # Generate premix.exs file
 ```
 
 ## License
