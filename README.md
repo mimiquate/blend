@@ -101,6 +101,9 @@ can be acomplished by customizing your `mix.exs` a bit, with the following steps
 $ mix blend.premix
 ```
 
+This will generate a `blend/premix.exs` file that needs to be compiled at the top of your `mix.exs` file
+so that some mix env vars are properly set based on the `BLEND` env var before running any mix task.
+
 ##### 2. Modify your `mix.exs`.
 
 ```elixir
