@@ -4,25 +4,29 @@ defmodule Blend do
   """
 
   @blend_dir "blend"
-  @blendfile_path "blend.exs"
+  @blendfile_name "blend.exs"
   @blendfile_template File.read!(Path.join(__DIR__, "blend/templates/blend.exs"))
-  @premix_file_path Path.join(@blend_dir, "premix.exs")
+  @premix_file_name "premix.exs"
   @premix_file_template File.read!(Path.join(__DIR__, "blend/templates/premix.exs"))
 
   def init do
-    case File.read(@blendfile_path) do
+    case File.read(@blendfile_name) do
       {:ok, _} ->
-        IO.puts("#{@blendfile_path} file already exists, doing nothing")
+        IO.puts("#{@blendfile_name} file already exists, doing nothing")
 
       {:error, :enoent} ->
-        File.write!(@blendfile_path, @blendfile_template)
-        IO.puts("Successfully created #{@blendfile_path} file")
+        File.write!(@blendfile_name, @blendfile_template)
+        IO.puts("Successfully created #{@blendfile_name} file")
     end
   end
 
   def premix do
-    File.write!(@premix_file_path, @premix_file_template)
-    IO.puts("Written #{@premix_file_path} file")
+    path = Path.join(@blend_dir, @premix_file_name)
+
+    File.mkdir_p!(@blend_dir)
+    File.write!(path, @premix_file_template)
+
+    IO.puts("Written #{path} file")
   end
 
   def within(blend_id, fun) do
@@ -56,18 +60,18 @@ defmodule Blend do
   end
 
   def blends do
-    case File.read(@blendfile_path) do
+    case File.read(@blendfile_name) do
       {:ok, contents} ->
         case Code.eval_string(contents) do
           {%{} = map, _} ->
             map
 
           _ ->
-            raise "Couldn't find a map defining your blends in #{@blendfile_path} file"
+            raise "Couldn't find a map defining your blends in #{@blendfile_name} file"
         end
 
       {:error, :enoent} ->
-        raise "Couldn't find a #{@blendfile_path} file"
+        raise "Couldn't find a #{@blendfile_name} file"
     end
   end
 end
