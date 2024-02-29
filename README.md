@@ -139,7 +139,7 @@ Now you can run any task, e.g. run your tests, against different lockfiles local
 $ BLEND=<blend_name> mix test
 ```
 
-## Commands
+## Tasks
 
 ```
 $ mix blend.init         # Generate blend.exs
