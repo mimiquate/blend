@@ -74,4 +74,16 @@ defmodule Blend do
         raise "Couldn't find a #{@blendfile_name} file"
     end
   end
+
+  def clean_lockfiles do
+    blend_names =
+      blends()
+      |> Map.keys()
+
+    Path.wildcard("#{@blend_dir}/*.mix.lock")
+    |> Enum.reject(fn path ->
+      path in Enum.map(blend_names, fn name -> "#{@blend_dir}/#{name}.mix.lock" end)
+    end)
+    |> Enum.each(&File.rm!/1)
+  end
 end

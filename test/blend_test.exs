@@ -15,7 +15,8 @@ defmodule BlendTest do
   end
 
   @tag :tmp_dir
-  test "blend.get task", %{tmp_dir: tmp_dir} do
+
+  test "blend.clean", %{tmp_dir: tmp_dir} do
     File.cd!(
       tmp_dir,
       fn ->
@@ -23,14 +24,33 @@ defmodule BlendTest do
           "blend.exs",
           """
           %{
-            "jason-1-0": [{:jason, "~> 1.0"}]
+            jason_1: [{:jason, "~> 1.0"}]
           }
           """
         )
 
-        Mix.Task.run("blend.get")
-        assert File.exists?("blend/jason-1-0.mix.lock")
+        run("blend.get")
+        assert File.exists?("blend/jason_1.mix.lock")
+
+        File.write(
+          "blend.exs",
+          """
+          %{
+            plug_1: [{:plug, "~> 1.0"}]
+          }
+          """
+        )
+
+        run("blend.get")
+        run("blend.clean")
+
+        assert File.exists?("blend/plug_1.mix.lock")
+        refute File.exists?("blend/jason_1.mix.lock")
       end
     )
+  end
+
+  defp run(args) do
+    Mix.Task.rerun(args)
   end
 end

@@ -6,13 +6,15 @@ defmodule Mix.Tasks.Blend.Clean do
 
   @impl true
   def run(args) do
+    Blend.clean_lockfiles()
+
     Blend.blends()
     |> Map.keys()
-    |> Enum.map(fn blend_id ->
-      IO.puts("Cleaning blend #{blend_id}")
+    |> Enum.map(fn blend_name ->
+      IO.puts("Cleaning blend #{blend_name}")
 
       Blend.within(
-        blend_id,
+        blend_name,
         fn ->
           Mix.Task.rerun("clean", ["--deps" | args])
         end
