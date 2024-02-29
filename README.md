@@ -6,8 +6,8 @@
 
 Test your package against different versions of its dependencies.
 
-Generates and maintains multiple lockfiles so that you can test your package
-against different variations of your dependencies versions.
+Generates and maintains multiple lockfiles based on your defined variations (a.k.a. blends)
+so that you can test your package against different variations of your dependencies versions.
 
 ## Installation
 
@@ -32,6 +32,11 @@ $ mix blend.init
 
 ### 2. Define your blends
 
+Edit and set your blends in the `blend.exs` file.
+
+For example, an elixir package that depends on `plug_crypto` with a requirement of `~> 1.2 or ~> 2.0`,
+that wants to test against the two major versions, would want to define the following:
+
 ```elixir
 # blend.exs
 
@@ -42,8 +47,11 @@ $ mix blend.init
 }
 ```
 
-Edit and set your blends in the auto-generated `blend.exs` file.
+in order for blend to generate two different lockfiles that lock `plug_crypto` in each of the
+supported major versions.
 
+Map keys define the blend name, used for naming the lockfile, and the dependencies list are
+merged with the package dependencies before resolving and generating the lockfile variation.
 
 ### 3. Resolve blends and generate lockfiles
 
