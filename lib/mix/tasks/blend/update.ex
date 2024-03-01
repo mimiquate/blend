@@ -1,7 +1,15 @@
 defmodule Mix.Tasks.Blend.Update do
+  @shortdoc "Updates lockfiles from blend.exs"
+
+  @moduledoc """
+  A task to update your blend lockfiles dependencies.
+
+  That means, trying to get all the dependencies in each lockfile to their most recent
+  version possible respecting the defined version constraints.
+  """
+
   use Mix.Task
 
-  @shortdoc "Updates lockfiles from blend.exs"
   @requirements ["app.config"]
 
   @impl true

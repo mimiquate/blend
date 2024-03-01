@@ -1,7 +1,5 @@
 defmodule Blend do
-  @moduledoc """
-  Documentation for `Blend`.
-  """
+  @moduledoc false
 
   @blend_dir "blend"
   @blendfile_name "blend.exs"

@@ -12,7 +12,12 @@ defmodule Blend.MixProject do
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      package: package()
+      package: package(),
+
+      # Docs
+      name: "Blend",
+      source_url: @source_url,
+      docs: docs()
     ]
   end
 
@@ -36,6 +41,12 @@ defmodule Blend.MixProject do
       links: %{
         "GitHub" => @source_url
       }
+    ]
+  end
+
+  defp docs do
+    [
+      extras: ["README.md"]
     ]
   end
 end

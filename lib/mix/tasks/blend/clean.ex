@@ -1,7 +1,13 @@
 defmodule Mix.Tasks.Blend.Clean do
+  @shortdoc "Cleans blend build artifacts"
+
+  @moduledoc """
+  A task to clean any stale lockfiles and blend build artifacts under the
+  `blend/` folder.
+  """
+
   use Mix.Task
 
-  @shortdoc "Cleans blend build artifacts"
   @requirements ["app.config"]
 
   @impl true
