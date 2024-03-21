@@ -89,7 +89,7 @@ Add to your `.gitignore` file, before comitting your changes.
 If you just need a CI job step to run against a blend lockfile, it might be enough to just:
 
 ```
-$ cp blend/<blend_name>.mix.lock mix.lock
+$ cp blend/plug_crypto_1.mix.lock mix.lock
 ```
 
 Now you can run any task, e.g. run your tests.
@@ -144,7 +144,7 @@ end
 Now you can run any task, e.g. run your tests, against different lockfiles locally by just executing:
 
 ```
-$ BLEND=<blend_name> mix test
+$ BLEND=plug_crypto_1 mix test
 ```
 
 ## Tasks
