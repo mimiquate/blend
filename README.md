@@ -171,6 +171,11 @@ With that inspiration, we set out to create something for the Elixir community t
 
 We realize that our current tool doesn’t address every testing scenario. Yet, we’re committed to improving it, aiming to cover more ground and enhance its functionality. Our goal goes beyond just solving a technical issue; we hope to make the development process in the Elixir community more supportive and efficient for everyone.
 
+## Having a hard time finding Elixir talent?
+
+At Mimiquate we have been Elixiring since 2016 and we are true believers in the community and the ecosystem.
+If you are looking to turbo charge your Elixir team, [reach out](mailto:contact@mimiquate.com?subject=Elixir%20team%20augmentation)!
+
 ## License
 
 Copyright 2024 Mimiquate
