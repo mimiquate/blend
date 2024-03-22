@@ -9,6 +9,8 @@ Test your package against different versions of its dependencies.
 Generates and maintains multiple lockfiles based on your defined variations (a.k.a. blends)
 so that you can test your package against different variations of your dependencies versions.
 
+You can read more about the motivation for this project [here](#Motivation).
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
@@ -157,6 +159,22 @@ $ mix blend.list         # List blends
 $ mix blend.clean        # Cleans blends build artifacts and stale lockfiles
 $ mix blend.premix       # Generate premix.exs file
 ```
+
+
+## Motivation
+
+At Mimiquate, our engagement with the Elixir ecosystem deeply influences our projects. We’ve benefited immensely from the community’s support and resources. During our development of open-source hex packages, we encountered a challenge: testing across different dependency versions lacked a straightforward approach. This issue led us to think about how we could contribute to the community that has been so supportive of us.
+
+Our background includes Ruby on Rails, where the Ruby community has tackled a similar challenge with the appraisal gem. This tool makes it easier to test various dependency versions and is designed to work well with CI pipelines, reducing the risk of regressions. It’s been really great for developers and has positively impacted the ecosystem’s health.
+
+With that inspiration, we set out to create something for the Elixir community to help streamline development. Our first version doesn’t have all the functionalities of the appraisal gem but establishes a good starting point. It allows developers to test their hex packages against different lock file combinations, which is handy for spotting regressions in common scenarios.
+
+We realize that our current tool doesn’t address every testing scenario. Yet, we’re committed to improving it, aiming to cover more ground and enhance its functionality. Our goal goes beyond just solving a technical issue; we hope to make the development process in the Elixir community more supportive and efficient for everyone.
+
+## Having a hard time finding Elixir talent?
+
+At Mimiquate we have been Elixiring since 2016 and we are true believers in the community and the ecosystem.
+If you are looking to turbo charge your Elixir team, [reach out](mailto:contact@mimiquate.com?subject=Elixir%20team%20augmentation)!
 
 ## License
 
