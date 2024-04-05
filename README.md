@@ -37,20 +37,20 @@ $ mix blend.init
 Edit and set your blends in the `blend.exs` file.
 
 For example, an elixir package that depends on `plug_crypto` with a requirement of `~> 1.2 or ~> 2.0`,
-that wants to test against the two major versions, would want to define the following:
+that wants to test against the two major versions, would normally have it's `mix.lock` resolved to
+`2.x`, so it would want to define the following:
 
 ```elixir
 # blend.exs
 
-# Example for testing against 1.x and 2.x of plug_crypto
+# Example for testing against plug_crypto 1.x
 %{
-  plug_crypto_1: [{:plug_crypto, "~> 1.2"}],
-  plug_crypto_2: [{:plug_crypto, "~> 2.0"}]
+  plug_crypto_1: [{:plug_crypto, "~> 1.2"}]
 }
 ```
 
-in order for blend to generate two different lockfiles that lock `plug_crypto` in each of the
-supported major versions.
+in order for blend to generate an additional lockfile that locks `plug_crypto` to the latest possible
+`1.x` supported version.
 
 Map keys define the blend name, used for naming the lockfile, and the dependencies list are
 merged with the package dependencies before resolving and generating the lockfile variation.
@@ -68,8 +68,7 @@ blend
 ├── _build
 ├── deps
 ├── plug_crypto_1.mix.lock
-└── plug_crypto_2.mix.lock
-
+mix.lock
 ```
 
 ### 4. Ignore blend build artifacts
