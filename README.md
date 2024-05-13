@@ -102,7 +102,7 @@ $ mix test
 #### Option B. `BLEND` env var configuration
 
 A more permanent configuration for running mix tasks in the context of a blend lockfile with a simple env var
-can be acomplished by customizing your `mix.exs` a bit, with the following steps.
+can be accomplished by customizing your `mix.exs` a bit, with the following steps.
 
 ##### 1. Create a new file `blend/premix.exs` with the following command:
 
