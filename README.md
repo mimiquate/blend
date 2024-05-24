@@ -73,11 +73,13 @@ mix.lock
 
 ### 4. Ignore blend build artifacts
 
-```
-# .gitignore
+```diff
+ # .gitignore
 
-/blend/_build
-/blend/deps
+ ...
+
++/blend/_build
++/blend/deps
 ```
 
 Add to your `.gitignore` file, before comitting your changes.
