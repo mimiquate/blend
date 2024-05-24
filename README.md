@@ -115,29 +115,29 @@ so that some mix env vars are properly set based on the `BLEND` env var before r
 
 ##### 2. Modify your `mix.exs`.
 
-```elixir
-# mix.exs
+```diff
+ # mix.exs
 
-Code.compile_file("blend/premix.exs")         # New
++Code.compile_file("blend/premix.exs")
 
-defmodule YourApp.MixProject do
-  ...
-  def project do
-    [
-      ...
-    ]
-    |> Keyword.merge(maybe_lockfile_option()) # New
-  end
-  ....
+ defmodule YourApp.MixProject do
+   ...
+   def project do
+     [
+       ...
+     ]
++    |> Keyword.merge(maybe_lockfile_option())
+   end
+   ....
 
-  defp maybe_lockfile_option do               # New
-    case System.get_env("MIX_LOCKFILE") do    #
-      nil -> []                               #
-      "" -> []                                #
-      lockfile -> [lockfile: lockfile]        #
-    end                                       #
-  end                                         #
-end            
++  defp maybe_lockfile_option do
++    case System.get_env("MIX_LOCKFILE") do
++      nil -> []
++      "" -> []
++      lockfile -> [lockfile: lockfile]
++     end
++  end
+ end
 ```
 
 ##### 3. Enjoy
