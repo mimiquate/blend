@@ -120,7 +120,9 @@ so that some mix env vars are properly set based on the `BLEND` env var before r
 ```diff
  # mix.exs
 
-+Code.compile_file("blend/premix.exs")
++if File.exists?("blend/premix.exs") do
++  Code.compile_file("blend/premix.exs")
++end
 
  defmodule YourApp.MixProject do
    ...
