@@ -85,20 +85,29 @@ mix.lock
 Add to your `.gitignore` file, before comitting your changes.
 
 
-### 5. Running in the context of a blend lockfile
+### 5. Running tasks in the context of a blend lockfile
 
 #### Option A. Overriding your `mix.lock`.
 
-If you just need a CI job step to run against a blend lockfile, it might be enough to just:
+If you just need to quickly run against a blend lockfile (e.g. in a CI job step), it might be enough to just:
 
 ```
 cp blend/plug_crypto_1.mix.lock mix.lock
 ```
 
-Now you can run any task, e.g. run your tests.
+before your `mix deps.get` step.
 
-```
+After that you can run any additional task, e.g. run your tests or your phx.server, which will run in the context
+of the specific blend lockfile copied.
+
+```sh
 mix test
+```
+
+or
+
+```sh
+mix phx.server
 ```
 
 #### Option B. `BLEND` env var configuration
@@ -146,10 +155,17 @@ so that some mix env vars are properly set based on the `BLEND` env var before r
 
 ##### 3. Enjoy
 
-Now you can run any task, e.g. run your tests, against different lockfiles locally by just executing:
+Now you can run any task, e.g. run your tests or your server, against different lockfiles locally by just
+prepending the proper environment variable value:
 
-```
+```sh
 BLEND=plug_crypto_1 mix test
+```
+
+or
+
+```sh
+BLEND=plug_crypto_1 mix phx.server
 ```
 
 ## Tasks
