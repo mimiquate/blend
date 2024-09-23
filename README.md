@@ -118,7 +118,7 @@ can be accomplished by customizing your `mix.exs` a bit, with the following step
 ##### 1. Create a new file `blend/premix.exs` with the following command:
 
 ```
-mix blend.premix
+mix blend.gen.premix
 ```
 
 This will generate a `blend/premix.exs` file that needs to be compiled at the top of your `mix.exs` file
@@ -176,7 +176,7 @@ mix blend.get          # Generate blend lockfiles
 mix blend.update --all # Update blend lockfiles to latest possible versions
 mix blend.list         # List blends
 mix blend.clean        # Cleans blends build artifacts and stale lockfiles
-mix blend.premix       # Generate premix.exs file
+mix blend.gen.premix   # Generate premix.exs file
 ```
 
 

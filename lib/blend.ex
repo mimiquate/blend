@@ -18,7 +18,7 @@ defmodule Blend do
     end
   end
 
-  def premix do
+  def generate_premix do
     path = Path.join(@blend_dir, @premix_file_name)
 
     File.mkdir_p!(@blend_dir)
