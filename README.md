@@ -29,7 +29,7 @@ end
 ### 1. Generate `blend.exs`
 
 ```
-mix blend.init
+mix blend.install
 ```
 
 ### 2. Define your blends
@@ -171,7 +171,7 @@ BLEND=plug_crypto_1 mix phx.server
 ## Tasks
 
 ```
-mix blend.init         # Generate blend.exs
+mix blend.install      # Generate blend.exs
 mix blend.get          # Generate blend lockfiles
 mix blend.update --all # Update blend lockfiles to latest possible versions
 mix blend.list         # List blends

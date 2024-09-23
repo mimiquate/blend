@@ -7,7 +7,7 @@ defmodule Blend do
   @premix_file_name "premix.exs"
   @premix_file_template File.read!(Path.join(__DIR__, "blend/templates/premix.exs"))
 
-  def init do
+  def install do
     case File.read(@blendfile_name) do
       {:ok, _} ->
         IO.puts("#{@blendfile_name} file already exists, doing nothing")
