@@ -3,12 +3,12 @@ defmodule BlendTest do
   doctest Blend
 
   @tag :tmp_dir
-  test "init/0 generates blend file", %{tmp_dir: tmp_dir} do
+  test "install/0 generates blend file", %{tmp_dir: tmp_dir} do
     File.cd!(
       tmp_dir,
       fn ->
         refute File.exists?("blend.exs")
-        Mix.Task.run("blend.init")
+        Mix.Task.run("blend.install")
         assert File.exists?("blend.exs")
       end
     )
