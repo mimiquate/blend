@@ -3,12 +3,13 @@ defmodule Blend.MixProject do
 
   @description "Test your package against different versions of its dependencies"
   @source_url "https://github.com/mimiquate/blend"
+  @version "0.4.1"
 
   def project do
     [
       app: :blend,
       description: @description,
-      version: "0.4.0",
+      version: @version,
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
