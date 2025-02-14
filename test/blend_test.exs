@@ -30,7 +30,7 @@ defmodule BlendTest do
         )
 
         run("blend.get")
-        assert File.exists?("blend/jason_1.mix.lock")
+        assert File.exists?("blend/jason_1/mix.lock")
 
         File.write(
           "blend.exs",
@@ -44,8 +44,8 @@ defmodule BlendTest do
         run("blend.get")
         run("blend.clean")
 
-        assert File.exists?("blend/plug_1.mix.lock")
-        refute File.exists?("blend/jason_1.mix.lock")
+        assert File.exists?("blend/plug_1/mix.lock")
+        refute File.exists?("blend/jason_1/mix.lock")
       end
     )
   end
