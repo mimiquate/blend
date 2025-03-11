@@ -5,6 +5,45 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Changed
+
+- Rearrenge blend folders.
+
+### Upgrade Steps
+
+- Change `.gitignore`
+```diff
+-/blend/_build
+-/blend/deps
++/blend/*/_build
++/blend/*/deps
+```
+
+- Move existing blend lockfiles and folders
+```sh
+$ for lock_file in blend/*.mix.lock; do
+  blend_name=$(basename "$lock_file" .mix.lock)
+
+  mkdir -p "blend/$blend_name"
+
+  mv "$lock_file" "blend/$blend_name/mix.lock"
+
+ if [ -d "blend/_build/$blend_name" ]; then
+   mv "blend/_build/$blend_name" "blend/$blend_name/_build/"
+ fi
+
+  if [ -d "blend/deps/$blend_name" ]; then
+    mv "blend/deps/$blend_name" "blend/$blend_name/deps/"
+  fi
+done
+```
+
+- Clean old directories
+
+`$ rm -r blend/deps blend/_build`
+
 ## [v0.4.1] - 2024-09-24
 
 ### Added
