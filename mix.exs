@@ -3,7 +3,7 @@ defmodule Blend.MixProject do
 
   @description "Test your package against different versions of its dependencies"
   @source_url "https://github.com/mimiquate/blend"
-  @version "0.4.1"
+  @version "0.4.2"
 
   def project do
     [
