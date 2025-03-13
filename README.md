@@ -172,12 +172,13 @@ BLEND=plug_crypto_1 mix phx.server
 ## Tasks
 
 ```
-mix blend.install      # Generate blend.exs
-mix blend.get          # Generate blend lockfiles
-mix blend.update --all # Update blend lockfiles to latest possible versions
-mix blend.list         # List blends
-mix blend.clean        # Cleans blends build artifacts and stale lockfiles
-mix blend.gen.premix   # Generate premix.exs file
+mix blend.install         # Generate blend.exs
+mix blend.get             # Generate blend lockfiles
+mix blend.update --all    # Update blend lockfiles to latest possible versions
+mix blend.unlock --unused # Clean unused dependencies in blend lockfiles
+mix blend.list            # List blends
+mix blend.clean           # Cleans blends build artifacts and stale lockfiles
+mix blend.gen.premix      # Generate premix.exs file
 ```
 
 

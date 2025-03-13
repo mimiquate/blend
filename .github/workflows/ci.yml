@@ -10,13 +10,15 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - elixir_version: '1.17'
-            otp_version: '27.0'
+          - elixir_version: '1.18'
+            otp_version: '27.3'
             lint: true
+          - elixir_version: '1.17'
+            otp_version: '26.2.5.9'
           - elixir_version: '1.16'
-            otp_version: '26.2.5'
+            otp_version: '25.3.2.18'
           - elixir_version: '1.15'
-            otp_version: '25.3.2.12'
+            otp_version: '25.3.2.18'
           - elixir_version: '1.14'
             otp_version: '24.3.4.17'
           - elixir_version: '1.13'
