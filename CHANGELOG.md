@@ -40,6 +40,16 @@ $ for lock_file in blend/*.mix.lock; do
 done
 ```
 
+- If you have `blend/premix.exs` file change it:
+```diff
+-maybe_put_env.("MIX_LOCKFILE", "blend/#{blend}.mix.lock")
+-maybe_put_env.("MIX_DEPS_PATH", "blend/deps/#{blend}")
+-maybe_put_env.("MIX_BUILD_ROOT", "blend/_build/#{blend}")
++maybe_put_env.("MIX_LOCKFILE", "blend/#{blend}/mix.lock")
++maybe_put_env.("MIX_DEPS_PATH", "blend/#{blend}/deps")
++maybe_put_env.("MIX_BUILD_ROOT", "blend/#{blend}/_build")
+```
+
 - Clean old directories
 
 `$ rm -r blend/deps blend/_build`
