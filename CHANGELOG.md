@@ -54,6 +54,12 @@ done
 
 `$ rm -r blend/deps blend/_build`
 
+- Update CI
+
+  Adding it for completeness
+  
+  There is no specific change because it depend on how each package implemented CI strategy
+
 ## [v0.4.1] - 2024-09-24
 
 ### Added
