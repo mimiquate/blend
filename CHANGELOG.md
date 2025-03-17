@@ -9,11 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Rearrange blend folders.
+- (BREAKING CHANGE) Path location of blend lockfiles and artifacts changed:
+  - Deps path has changed from `blend/deps/example/` to `blend/example/deps`.
+  - Build (compile artifcats) path has changed from `blend/_build/example/` to `blend/example/_build`.
+  - Lockfiles path has changed from `blend/example.mix.lock` to `blend/example/mix.lock`.
 
 ### Upgrade Steps
 
-- Change `.gitignore`
+1. Update `.gitignore` to correctly ignore artifacts new location
+
 ```diff
 -/blend/_build
 -/blend/deps
@@ -21,18 +25,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 +/blend/*/deps
 ```
 
-- Move existing blend lockfiles and folders
+2. Move existing blend lockfiles and artifacts
+
+You can run the below multi-line command in your project root path.
+
 ```sh
-$ for lock_file in blend/*.mix.lock; do
+for lock_file in blend/*.mix.lock; do
   blend_name=$(basename "$lock_file" .mix.lock)
 
   mkdir -p "blend/$blend_name"
 
   mv "$lock_file" "blend/$blend_name/mix.lock"
 
- if [ -d "blend/_build/$blend_name" ]; then
-   mv "blend/_build/$blend_name" "blend/$blend_name/_build/"
- fi
+  if [ -d "blend/_build/$blend_name" ]; then
+    mv "blend/_build/$blend_name" "blend/$blend_name/_build/"
+  fi
 
   if [ -d "blend/deps/$blend_name" ]; then
     mv "blend/deps/$blend_name" "blend/$blend_name/deps/"
@@ -40,7 +47,8 @@ $ for lock_file in blend/*.mix.lock; do
 done
 ```
 
-- If you have `blend/premix.exs` file change it:
+3. **If** you have a `blend/premix.exs` update it as follows:
+
 ```diff
 -maybe_put_env.("MIX_LOCKFILE", "blend/#{blend}.mix.lock")
 -maybe_put_env.("MIX_DEPS_PATH", "blend/deps/#{blend}")
@@ -50,15 +58,11 @@ done
 +maybe_put_env.("MIX_BUILD_ROOT", "blend/#{blend}/_build")
 ```
 
-- Clean old directories
+4. **If** you have references to blend files in CI configuration files like `.github/workflows/*.yml` or other, you might need to update those references path.
 
-`$ rm -r blend/deps blend/_build`
+5. Clean old directories
 
-- Update CI
-
-  Adding it for completeness
-  
-  There is no specific change because it depend on how each package implemented CI strategy
+`rm -r blend/deps blend/_build`
 
 ## [v0.4.2] - 2025-03-12
 
