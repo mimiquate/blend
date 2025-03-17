@@ -65,9 +65,10 @@ to resolve your blends and generate new lockfiles with variations of your depend
 
 ```
 blend
-├── _build
-├── deps
-├── plug_crypto_1.mix.lock
+├── plug_crypto_1
+│   ├── _build
+│   ├── deps
+│   └── mix.lock
 mix.lock
 ```
 
@@ -78,8 +79,8 @@ mix.lock
 
  ...
 
-+/blend/_build
-+/blend/deps
++/blend/*/_build
++/blend/*/deps
 ```
 
 Add to your `.gitignore` file, before comitting your changes.
@@ -92,7 +93,7 @@ Add to your `.gitignore` file, before comitting your changes.
 If you just need to quickly run against a blend lockfile (e.g. in a CI job step), it might be enough to just:
 
 ```
-cp blend/plug_crypto_1.mix.lock mix.lock
+cp blend/plug_crypto_1/mix.lock mix.lock
 ```
 
 before your `mix deps.get` step.

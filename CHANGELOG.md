@@ -5,6 +5,61 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Changed
+
+- Rearrange blend folders.
+
+### Upgrade Steps
+
+- Change `.gitignore`
+```diff
+-/blend/_build
+-/blend/deps
++/blend/*/_build
++/blend/*/deps
+```
+
+- Move existing blend lockfiles and folders
+```sh
+$ for lock_file in blend/*.mix.lock; do
+  blend_name=$(basename "$lock_file" .mix.lock)
+
+  mkdir -p "blend/$blend_name"
+
+  mv "$lock_file" "blend/$blend_name/mix.lock"
+
+ if [ -d "blend/_build/$blend_name" ]; then
+   mv "blend/_build/$blend_name" "blend/$blend_name/_build/"
+ fi
+
+  if [ -d "blend/deps/$blend_name" ]; then
+    mv "blend/deps/$blend_name" "blend/$blend_name/deps/"
+  fi
+done
+```
+
+- If you have `blend/premix.exs` file change it:
+```diff
+-maybe_put_env.("MIX_LOCKFILE", "blend/#{blend}.mix.lock")
+-maybe_put_env.("MIX_DEPS_PATH", "blend/deps/#{blend}")
+-maybe_put_env.("MIX_BUILD_ROOT", "blend/_build/#{blend}")
++maybe_put_env.("MIX_LOCKFILE", "blend/#{blend}/mix.lock")
++maybe_put_env.("MIX_DEPS_PATH", "blend/#{blend}/deps")
++maybe_put_env.("MIX_BUILD_ROOT", "blend/#{blend}/_build")
+```
+
+- Clean old directories
+
+`$ rm -r blend/deps blend/_build`
+
+- Update CI
+
+  Adding it for completeness
+  
+  There is no specific change because it depend on how each package implemented CI strategy
+
 ## [v0.4.2] - 2025-03-12
 
 ### Added

@@ -45,9 +45,9 @@ defmodule Blend do
                 |> List.keystore(elem(dep, 0), 0, dep)
               end
             ),
-          lockfile: "#{@blend_dir}/#{blend_id}.mix.lock",
-          build_path: "#{@blend_dir}/_build/#{blend_id}",
-          deps_path: "#{@blend_dir}/deps/#{blend_id}"
+          lockfile: "#{@blend_dir}/#{blend_id}/mix.lock",
+          build_path: "#{@blend_dir}/#{blend_id}/_build",
+          deps_path: "#{@blend_dir}/#{blend_id}/deps"
         ),
         "nofile"
       )
@@ -74,13 +74,11 @@ defmodule Blend do
   end
 
   def clean_lockfiles do
-    blend_names =
-      blends()
-      |> Map.keys()
+    blend_names = blends() |> Map.keys()
 
-    Path.wildcard("#{@blend_dir}/*.mix.lock")
+    Path.wildcard("#{@blend_dir}/*/mix.lock")
     |> Enum.reject(fn path ->
-      path in Enum.map(blend_names, fn name -> "#{@blend_dir}/#{name}.mix.lock" end)
+      path in Enum.map(blend_names, fn name -> "#{@blend_dir}/#{name}/mix.lock" end)
     end)
     |> Enum.each(&File.rm!/1)
   end
