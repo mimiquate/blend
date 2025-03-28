@@ -46,8 +46,19 @@ for lock_file in blend/*.mix.lock; do
   fi
 done
 ```
+3. Clean old directories
 
-3. **If** you have a `blend/premix.exs` update it as follows:
+```sh
+rm -r blend/deps blend/_build
+```
+
+4. Update blend in blend locks also
+
+```sh
+mix blend.update blend
+```
+
+5. **If** you have a `blend/premix.exs` update it as follows:
 
 ```diff
 -maybe_put_env.("MIX_LOCKFILE", "blend/#{blend}.mix.lock")
@@ -58,11 +69,8 @@ done
 +maybe_put_env.("MIX_BUILD_ROOT", "blend/#{blend}/_build")
 ```
 
-4. **If** you have references to blend files in CI configuration files like `.github/workflows/*.yml` or other, you might need to update those references path.
+6. **If** you have references to blend files in CI configuration files like `.github/workflows/*.yml` or other, you might need to update those references path.
 
-5. Clean old directories
-
-`rm -r blend/deps blend/_build`
 
 ## [v0.4.2] - 2025-03-12
 
