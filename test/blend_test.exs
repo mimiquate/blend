@@ -1,5 +1,7 @@
 defmodule BlendTest do
   use ExUnit.Case
+  import ExUnit.CaptureIO
+
   doctest Blend
 
   @tag :tmp_dir
@@ -8,14 +10,17 @@ defmodule BlendTest do
       tmp_dir,
       fn ->
         refute File.exists?("blend.exs")
-        Mix.Task.run("blend.install")
+
+        assert with_io(fn ->
+                 Mix.Task.run("blend.install")
+               end) == {:ok, "Successfully created blend.exs file\n"}
+
         assert File.exists?("blend.exs")
       end
     )
   end
 
   @tag :tmp_dir
-
   test "blend.clean", %{tmp_dir: tmp_dir} do
     File.cd!(
       tmp_dir,
@@ -51,6 +56,6 @@ defmodule BlendTest do
   end
 
   defp run(args) do
-    Mix.Task.rerun(args)
+    {:ok, _output} = with_io(fn -> Mix.Task.rerun(args) end)
   end
 end
