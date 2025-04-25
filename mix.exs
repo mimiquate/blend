@@ -48,7 +48,8 @@ defmodule Blend.MixProject do
   defp docs do
     [
       main: "readme",
-      extras: ["README.md"]
+      extras: ["README.md"],
+      skip_code_autolink_to: &(&1 == "BLEND")
     ]
   end
 end
