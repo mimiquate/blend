@@ -16,7 +16,7 @@ defmodule Mix.Tasks.Blend.Clean do
 
     Blend.blends()
     |> Map.keys()
-    |> Enum.map(fn blend_name ->
+    |> Enum.each(fn blend_name ->
       IO.puts("Cleaning blend #{blend_name}")
 
       Blend.within(
