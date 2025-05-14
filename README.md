@@ -9,12 +9,11 @@ Test your package against different versions of its dependencies.
 Generates and maintains multiple lockfiles based on your defined variations (a.k.a. blends)
 so that you can test your package against different variations of your dependencies versions.
 
-You can read more about the motivation for this project [here](#Motivation).
+You can read more about the motivation for this project [in the motivation section](#motivation).
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `blend` to your list of dependencies in `mix.exs`:
+The package can be installed by adding `blend` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -28,7 +27,7 @@ end
 
 ### 1. Generate `blend.exs`
 
-```
+```sh
 mix blend.install
 ```
 
@@ -57,13 +56,13 @@ merged with the package dependencies before resolving and generating the lockfil
 
 ### 3. Resolve blends and generate lockfiles
 
-```
+```sh
 mix blend.get
 ```
 
 to resolve your blends and generate new lockfiles with variations of your dependencies under the new `/blend` folder.
 
-```
+```txt
 blend
 ├── plug_crypto_1
 │   ├── _build
@@ -83,16 +82,15 @@ mix.lock
 +/blend/*/deps
 ```
 
-Add to your `.gitignore` file, before comitting your changes.
-
+Add to your `.gitignore` file, before committing your changes.
 
 ### 5. Running tasks in the context of a blend lockfile
 
-#### Option A. Overriding your `mix.lock`.
+#### Option A. Overriding your `mix.lock`
 
 If you just need to quickly run against a blend lockfile (e.g. in a CI job step), it might be enough to just:
 
-```
+```sh
 cp blend/plug_crypto_1/mix.lock mix.lock
 ```
 
@@ -116,16 +114,16 @@ mix phx.server
 A more permanent configuration for running mix tasks in the context of a blend lockfile with a simple env var
 can be accomplished by customizing your `mix.exs` a bit, with the following steps.
 
-##### 1. Create a new file `blend/premix.exs` with the following command:
+##### 1. Create a new file `blend/premix.exs` with the following command
 
-```
+```sh
 mix blend.gen.premix
 ```
 
 This will generate a `blend/premix.exs` file that needs to be compiled at the top of your `mix.exs` file
 so that some mix env vars are properly set based on the `BLEND` env var before running any mix task.
 
-##### 2. Modify your `mix.exs`.
+##### 2. Modify your `mix.exs`
 
 ```diff
  # mix.exs
@@ -171,7 +169,7 @@ BLEND=plug_crypto_1 mix phx.server
 
 ## Tasks
 
-```
+```sh
 mix blend.install         # Generate blend.exs
 mix blend.get             # Generate blend lockfiles
 mix blend.update --all    # Update blend lockfiles to latest possible versions
@@ -180,7 +178,6 @@ mix blend.list            # List blends
 mix blend.clean           # Cleans blends build artifacts and stale lockfiles
 mix blend.gen.premix      # Generate premix.exs file
 ```
-
 
 ## Motivation
 
@@ -205,7 +202,9 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+```txt
+http://www.apache.org/licenses/LICENSE-2.0
+```
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
