@@ -109,7 +109,27 @@ or
 mix phx.server
 ```
 
-#### Option B. `BLEND` env var configuration
+#### Option B. Invoking `mix blend` from the command line
+
+Running a task in all blends
+
+```sh
+mix blend test
+```
+
+Running a task in a specific blend
+
+```sh
+mix blend --only plug_crypto_1 phx.server
+```
+
+Changing env variables
+
+```sh
+mix blend MIX_ENV=test compile
+```
+
+#### Option C. `BLEND` env var configuration
 
 A more permanent configuration for running mix tasks in the context of a blend lockfile with a simple env var
 can be accomplished by customizing your `mix.exs` a bit, with the following steps.
@@ -170,6 +190,7 @@ BLEND=plug_crypto_1 mix phx.server
 ## Tasks
 
 ```sh
+mix blend                 # Runs the given Mix task in the context of blend lockfile(s)
 mix blend.install         # Generate blend.exs
 mix blend.get             # Generate blend lockfiles
 mix blend.update --all    # Update blend lockfiles to latest possible versions
