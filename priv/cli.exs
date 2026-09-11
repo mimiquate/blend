@@ -111,21 +111,29 @@ defmodule Blend.CLI do
     blend_deps = Keyword.fetch!(opts, :deps) |> parse_deps()
 
     if original_project = Mix.Project.pop() do
-      old_deps = original_project[:config][:deps] |> List.keydelete(:blend, 0)
+      fun_ast =
+        for {name, arity} <- original_project.name.__info__(:functions), name != :project do
+          args = Enum.map(1..arity//1, &Macro.var(:"arg#{&1}", nil))
 
-      {:module, new_project, _, _} =
-        defmodule :"Blend.#{blend_id}" do
-          @blend_id blend_id
-          @blend_deps blend_deps
-          @original_project original_project.name
+          quote do
+            defdelegate unquote(name)(unquote_splicing(args)), to: @original_project
+          end
+        end
+
+      contents =
+        quote do
+          @blend_id unquote(blend_id)
+          @blend_deps unquote(Macro.escape(blend_deps))
+          @original_project unquote(original_project.name)
           def project do
             Blend.CLI.patch_project(@original_project.project(), @blend_id, @blend_deps)
           end
 
-          def application do
-            @original_project.application()
-          end
+          unquote(fun_ast)
         end
+
+      {:module, new_project, _, _} =
+        Module.create(:"Blend.#{blend_id}", contents, Macro.Env.location(__ENV__))
 
       Mix.ProjectStack.post_config(state_loader: {:cli, task})
       Mix.Project.push(new_project, blend_id)
