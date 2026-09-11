@@ -146,8 +146,9 @@ defmodule Blend.CLI do
 
     Keyword.merge(config,
       deps:
-        Enum.reduce(blend_deps, old_deps, fn dep, acc ->
-          List.keystore(acc, elem(dep, 0), 0, dep)
+        Enum.reduce(blend_deps, old_deps, fn
+          {:-, name}, acc -> List.keydelete(acc, name, 0)
+          dep, acc -> List.keystore(acc, elem(dep, 0), 0, dep)
         end),
       lockfile: "#{@blend_dir}/#{blend_id}/mix.lock",
       build_path: "#{@blend_dir}/#{blend_id}/_build",
